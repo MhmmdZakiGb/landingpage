@@ -6,85 +6,86 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { HelpCircle } from 'lucide-react';
+import { HelpCircle, Phone } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const faqs = [
   {
-    q: 'Berapa biaya mobdemob (mobilisasi/demobilisasi) alat berat?',
-    a: 'Biaya mobdemob tergantung lokasi proyek dan jenis unit. Untuk area Jabodetabek, mobilisasi forklift mulai dari Rp 1.5 juta, sedangkan mobile crane dapat mencapai Rp 5 juta. Biaya luar kota dihitung per kilometer atau dengan rute feri. Kami selalu menyertakan rincian mobdemob secara transparan dalam penawaran.',
+    q: 'Bagaimana penentuan biaya Mob-Demob (Mobilisasi & Demobilisasi)?',
+    a: 'Biaya Mob-Demob dihitung terpisah berdasarkan jarak dari Pool kami di Semarang ke lokasi proyek Anda (misal Kendal, Solo, Batang, DIY, dll) serta jenis towing/lowbed yang digunakan. Biaya final akan ditinjau dan ditetapkan secara transparan oleh Tim Manajemen GNP saat proses konfirmasi pengajuan.',
   },
   {
-    q: 'Apa minimum shift atau durasi sewa alat berat?',
-    a: 'Minimum sewa adalah 1 shift (8 jam) untuk operasi harian. Untuk kontrak bulanan, minimum durasi 1 bulan dengan diskon khusus. Sewa harian mendukung 2 shift (16 jam) atau 3 shift (24 jam) dengan tarif shift tambahan. Kami fleksibel untuk kebutuhan proyek jangka pendek maupun panjang.',
+    q: 'Apakah harga sewa forklift sudah termasuk operator dan solar (BBM)?',
+    a: 'Ya. Seluruh unit forklift milik GNP menerapkan sistem sewa paket lengkap: sudah mencakup unit, operator berlisensi SIO aktif, bahan bakar (solar), serta suku cadang dan pemeliharaan rutin selama jam operasional shift.',
   },
   {
-    q: 'Apakah alat berat yang disewa sudah diasuransikan?',
-    a: 'Ya. Setiap unit kami dilindungi asuransi All Risk yang mencakup kerusakan akibat kecelakaan kerja. Operator kami juga tercakup asuransi jiwa dan K3. Namun, klien bertanggung jawab atas kerusakan akibat kelalaian operator pihak klien atau kondisi lokasi yang tidak sesuai standar keselamatan.',
+    q: 'Apa itu 1 Shift dalam ketentuan sewa GNP?',
+    a: 'Satu shift dihitung setara dengan 8 jam kerja operasional (termasuk 1 jam istirahat operator). Untuk kebutuhan lembur atau pengerjaan 2 shift (16 jam) / 3 shift (24 jam), dapat diajukan pada kolom Keterangan Tambahan untuk diatur jadwal pergantian operatornya.',
   },
   {
-    q: 'Apakah operator ikut disertakan dalam biaya sewa?',
-    a: 'Untuk unit mobile crane dan alat berat kelas berat, operator berlisensi SILO/SIKOJA sudah termasuk dalam tarif sewa. Untuk forklift, operator tersedia opsi — bisa disertakan dengan biaya tambahan atau self-service bila klien memiliki operator tersendiri yang bersertifikasi.',
+    q: 'Bagaimana alur dari pengajuan online hingga unit dikirim ke lokasi?',
+    a: 'Alurnya sangat mudah: (1) Anda mengisi Form Pengajuan Mandiri di website ini dan mendapatkan Kode Pengajuan. (2) Tim kami memeriksa ketersediaan jadwal armada di kalender. (3) Tim Manajemen GNP menetapkan tarif Mob-Demob dan menyetujui pengajuan. (4) SPK diterbitkan, pembayaran DP/PO disepakati, dan unit langsung dimobilisasi ke lokasi proyek Anda.',
   },
   {
-    q: 'Bagaimana proses ajukan sewa dan approval-nya?',
-    a: 'Cukup hubungi kami via WhatsApp atau ajukan melalui tombol "Ajukan Sewa". Tim kami akan mengirimkan RFQ dalam 30 menit, penawaran lengkap kurang dari 2 jam pada jam kerja, dan SPK dapat diterbitkan dalam hari yang sama. Mobilisasi cepat 1x24 jam untuk unit tersedia.',
+    q: 'Apakah CV. Giri Nusa Persada melayani sewa di luar Semarang?',
+    a: 'Ya, wilayah operasional utama kami mencakup seluruh Provinsi Jawa Tengah (Kendal, Batang, Solo, Demak, Kudus, Cilacap, Pekalongan, Magelang, dll) serta Daerah Istimewa Yogyakarta (Sleman, Bantul, Kota Jogja).',
   },
   {
-    q: 'Apakah tersedia unit cadangan jika alat mengalami kerusakan?',
-    a: 'Ya. Melalui jaringan unit rekanan kami yang berjumlah 300+ unit, kami menyediakan unit cadangan untuk memastikan kelangsungan proyek Anda. Pergantian unit tidak dikenakan biaya mobdemob tambahan bila kerusakan terjadi karena faktor internal armada kami.',
+    q: 'Bagaimana dengan ketersediaan unit Crane dan Excavator?',
+    a: 'Untuk Mobile Crane dan Excavator, kami berkolaborasi dengan jaringan unit rekanan terpercaya di Jawa Tengah. Setiap pengajuan unit rekanan akan dikonfirmasi ketersediaan fisiknya secara langsung oleh Tim Operasional kami sebelum diterbitkan persetujuan.',
   },
 ];
 
 export function FAQ() {
   return (
-    <section id="faq" className="relative bg-background py-20 lg:py-28">
+    <section id="faq" className="relative bg-[#fff8f4] py-16 lg:py-24 border-t border-[#e8d8c8]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
-          {/* Left header */}
+          {/* Left info box */}
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-primary">
-              <HelpCircle className="h-4 w-4" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#e8d8c8] bg-[#fff1e5] px-4 py-1.5 text-xs font-black uppercase tracking-wider text-[#855300]">
+              <HelpCircle className="h-4 w-4 text-[#d97706]" />
               FAQ Operasional
             </div>
-            <h2 className="mt-5 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl text-balance">
-              Pertanyaan Seputar Operasional Sewa
+            <h2 className="mt-4 text-3xl font-black tracking-tight text-[#221a12] sm:text-4xl text-balance">
+              Pertanyaan Seputar Sewa Alat Berat GNP
             </h2>
-            <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-              Hal-hal penting yang sering ditanyakan terkait biaya mobdemob,
-              minimum shift, asuransi, dan proses pengajuan sewa alat berat.
+            <p className="mt-4 text-sm text-[#534434] sm:text-base leading-relaxed">
+              Hal-hal penting seputar kebijakan sewa, sistem include BBM/operator, perhitungan mob-demob, dan cakupan wilayah proyek.
             </p>
 
-            <div className="mt-8 rounded-2xl border border-border bg-muted/40 p-6">
-              <p className="text-sm font-semibold">
-                Masih ada pertanyaan lain?
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Tim kami siap menjawab 24/7 via WhatsApp.
+            <div className="mt-8 rounded-3xl border border-[#e8d8c8] bg-white p-6 shadow-sm">
+              <h4 className="text-sm font-black text-[#221a12]">
+                Punya Kebutuhan Spesifik Proyek?
+              </h4>
+              <p className="mt-1.5 text-xs text-[#534434] leading-relaxed">
+                Konsultasikan langsung dengan Tim Operasional pool Semarang kami.
               </p>
               <a
-                href="https://wa.me/6281234567890"
+                href="https://wa.me/6287839788721?text=Halo%20GNP%20Heavy%20Equipment,%20saya%20ingin%20tanya%20detail%20sewa%20alat%20berat."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-block text-sm font-bold text-primary hover:underline"
+                className="mt-4 inline-flex items-center gap-2 text-xs font-black text-[#221a12] bg-[#f59e0b] hover:bg-[#d97706] hover:text-white px-4 py-2.5 rounded-xl transition-colors"
               >
-                Chat WhatsApp &rarr;
+                <Phone className="h-3.5 w-3.5" />
+                Chat WhatsApp Admin &rarr;
               </a>
             </div>
           </div>
 
-          {/* Right accordion */}
+          {/* Right Accordion */}
           <div>
-            <Accordion type="single" collapsible className="space-y-3">
+            <Accordion type="single" collapsible className="space-y-3.5">
               {faqs.map((item, i) => (
                 <AccordionItem
                   key={i}
                   value={`item-${i}`}
-                  className="overflow-hidden rounded-xl border border-border bg-card px-6 shadow-sm transition-shadow data-[state=open]:shadow-md"
+                  className="overflow-hidden rounded-2xl border border-[#e8d8c8] bg-white px-6 shadow-sm transition-shadow data-[state=open]:shadow-md data-[state=open]:border-[#f59e0b]"
                 >
-                  <AccordionTrigger className="py-5 text-left text-base font-bold hover:no-underline">
+                  <AccordionTrigger className="py-5 text-left text-sm sm:text-base font-bold text-[#221a12] hover:no-underline hover:text-[#d97706]">
                     {item.q}
                   </AccordionTrigger>
-                  <AccordionContent className="pb-5 text-sm leading-relaxed text-muted-foreground">
+                  <AccordionContent className="pb-5 text-xs sm:text-sm leading-relaxed text-[#534434]">
                     {item.a}
                   </AccordionContent>
                 </AccordionItem>

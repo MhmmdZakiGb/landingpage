@@ -1,25 +1,14 @@
-import { Navbar } from '@/components/sections/Navbar';
-import { Hero } from '@/components/sections/Hero';
-import { Features } from '@/components/sections/Features';
-import { About } from '@/components/sections/About';
-import { Catalog } from '@/components/sections/Catalog';
-import { Testimonials } from '@/components/sections/Testimonials';
-import { FAQ } from '@/components/sections/FAQ';
-import { Footer } from '@/components/sections/Footer';
+import { HomePrototype } from '@/components/prototype/Content';
+import { SiteFooter, SiteHeader } from '@/components/prototype/SiteShell';
 
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <SiteHeader />
       <main>
-        <Hero />
-        <About />
-        <Features />
-        <Catalog />
-        <Testimonials />
-        <FAQ />
+        <HomePrototype />
       </main>
-      <Footer />
+      <SiteFooter />
     </>
   );
 }

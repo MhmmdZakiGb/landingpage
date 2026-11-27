@@ -1,155 +1,192 @@
 'use client';
 
-import { ArrowRight, CheckCircle2, Star, type LucideIcon } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, CheckCircle2, ShieldCheck, Truck, Sparkles, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useArmadaUnits } from '@/hooks/use-armada-units';
+import { HeavyEquipmentUnit } from '@/lib/types/booking';
 
-type Unit = {
-  name: string;
-  capacity: string;
-  image: string;
-  source: 'Milik Sendiri' | 'Rekanan';
-  specs: string[];
-  rating: number;
-};
+interface CatalogProps {
+  onSelectUnit?: (unitId: string) => void;
+}
 
-const units: Unit[] = [
-  {
-    name: 'Forklift Diesel 3 Ton',
-    capacity: '3 Ton',
-    image:
-      'https://images.pexels.com/photos/29480712/pexels-photo-29480712.jpeg?auto=compress&cs=tinysrgb&w=940',
-    source: 'Milik Sendiri',
-    specs: ['Mast 4 Meter', 'Diesel Engine', 'Pneumatic Tire'],
-    rating: 4.9,
-  },
-  {
-    name: 'Forklift Diesel 7 Ton',
-    capacity: '7 Ton',
-    image:
-      'https://images.pexels.com/photos/18699604/pexels-photo-18699604.jpeg?auto=compress&cs=tinysrgb&w=940',
-    source: 'Milik Sendiri',
-    specs: ['Mast 4.5 Meter', 'Cummins Engine', 'Side Shift'],
-    rating: 4.8,
-  },
-  {
-    name: 'Mobile Crane 14 Ton',
-    capacity: '14 Ton',
-    image:
-      'https://images.pexels.com/photos/35693096/pexels-photo-35693096.jpeg?auto=compress&cs=tinysrgb&w=940',
-    source: 'Rekanan',
-    specs: ['Boom 21 Meter', '4x4 Drive', 'Telescopic Boom'],
-    rating: 4.7,
-  },
-];
+export function Catalog({ onSelectUnit }: CatalogProps) {
+  const { units } = useArmadaUnits();
+  const [activeFilter, setActiveFilter] = useState<'all' | 'gnp' | 'rekanan'>('all');
 
-export function Catalog() {
+  const gnpCount = units.filter((u) => u.source === 'Milik GNP').length;
+  const rekananCount = units.filter((u) => u.source === 'Unit Rekanan').length;
+
+  const filteredUnits = units.filter((u) => {
+    if (activeFilter === 'gnp') return u.source === 'Milik GNP';
+    if (activeFilter === 'rekanan') return u.source === 'Unit Rekanan';
+    return true;
+  });
+
+  const handleBookUnit = (unitId: string) => {
+    if (onSelectUnit) {
+      onSelectUnit(unitId);
+    }
+    const formEl = document.getElementById('pengajuan-sewa');
+    if (formEl) {
+      formEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section
-      id="armada"
-      className="relative bg-gradient-to-b from-muted/40 to-background py-20 lg:py-28"
-    >
+    <section id="armada" className="relative bg-slate-50 py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col items-end justify-between gap-6 sm:flex-row">
-          <div className="max-w-xl">
-            <span className="text-sm font-bold uppercase tracking-widest text-primary">
-              Katalog Armada
-            </span>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl text-balance">
-              Unit Populer Siap Mobilisasi
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-100/70 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-amber-800">
+              <Truck className="h-3.5 w-3.5" />
+              Katalog Armada Lengkap
+            </div>
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl lg:text-5xl text-balance">
+              Armada Forklift &amp; Alat Berat Siap Mobilisasi
             </h2>
-            <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-              Pilihan alat berat yang paling sering disewa untuk proyek
-              kontraktor dan manufaktur di seluruh Indonesia.
+            <p className="mt-4 text-base text-slate-600 sm:text-lg leading-relaxed">
+              Unit Forklift 3–10 Ton milik pool sendiri di Semarang serta ketersediaan Mobile Crane &amp; Excavator rekanan terverifikasi untuk proyek Anda di Jateng &amp; DIY.
             </p>
           </div>
-          <a href="#armada" className="hidden shrink-0 sm:block">
-            <Button variant="outline" className="gap-2 font-semibold">
-              Lihat Semua Unit
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </a>
+
+          {/* Filter tabs */}
+          <div className="flex flex-wrap gap-2 p-1.5 rounded-2xl bg-white border border-slate-200 shadow-sm self-start md:self-end">
+            <button
+              onClick={() => setActiveFilter('all')}
+              className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all ${activeFilter === 'all'
+                  ? 'bg-amber-500 text-slate-950 shadow-sm'
+                  : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100'
+                }`}
+            >
+              Semua ({units.length})
+            </button>
+            <button
+              onClick={() => setActiveFilter('gnp')}
+              className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all ${activeFilter === 'gnp'
+                  ? 'bg-amber-500 text-slate-950 shadow-sm'
+                  : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100'
+                }`}
+            >
+              Milik GNP ({gnpCount})
+            </button>
+            <button
+              onClick={() => setActiveFilter('rekanan')}
+              className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all ${activeFilter === 'rekanan'
+                  ? 'bg-amber-500 text-slate-950 shadow-sm'
+                  : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100'
+                }`}
+            >
+              Sumber: Unit Rekanan ({rekananCount})
+            </button>
+          </div>
         </div>
 
-        {/* Cards */}
-        <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-          {units.map((unit, i) => (
+        {/* Card Grid */}
+        <div className="mt-12 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+          {filteredUnits.map((unit) => (
             <div
-              key={unit.name}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:border-primary/40 animate-fade-up"
-              style={{ animationDelay: `${i * 120}ms` }}
+              key={unit.id}
+              className="group flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-amber-400"
             >
-              {/* Image */}
-              <div className="relative aspect-[16/10] overflow-hidden">
+              {/* Image & Badges */}
+              <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
                 <img
                   src={unit.image}
                   alt={unit.name}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
 
-                {/* Source badge */}
-                <Badge
-                  variant={unit.source === 'Milik Sendiri' ? 'default' : 'secondary'}
-                  className="absolute left-4 top-4 gap-1.5 px-3 py-1 text-xs font-bold shadow-md"
-                >
-                  {unit.source === 'Milik Sendiri' ? (
-                    <CheckCircle2 className="h-3.5 w-3.5" />
-                  ) : (
-                    <Star className="h-3.5 w-3.5" />
-                  )}
-                  {unit.source}
-                </Badge>
+                {/* Source badge: Sesuai aturan bisnis, jika rekanan cukup tampilkan "Sumber: Unit Rekanan" */}
+                <div className="absolute left-3.5 top-3.5">
+                  <Badge
+                    className={`font-black text-xs px-3 py-1 shadow-md border-0 ${unit.source === 'Milik GNP'
+                        ? 'bg-amber-500 text-slate-950'
+                        : 'bg-slate-900 text-amber-300'
+                      }`}
+                  >
+                    {unit.source === 'Milik GNP' ? (
+                      <span className="flex items-center gap-1.5">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-slate-950" />
+                        Milik Sendiri (GNP)
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-1.5">
+                        <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+                        Sumber: Unit Rekanan
+                      </span>
+                    )}
+                  </Badge>
+                </div>
 
                 {/* Capacity badge */}
-                <div className="absolute bottom-4 right-4 rounded-lg bg-primary px-3 py-1.5 text-sm font-extrabold text-primary-foreground shadow-lg">
-                  {unit.capacity}
+                <div className="absolute bottom-3.5 right-3.5 rounded-xl bg-slate-950/90 backdrop-blur-md px-3.5 py-1.5 text-sm font-black text-amber-400 shadow-lg">
+                  Kapasitas: {unit.capacityTon} Ton
                 </div>
               </div>
 
               {/* Body */}
               <div className="flex flex-1 flex-col p-6">
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-xl font-bold tracking-tight">
-                    {unit.name}
-                  </h3>
-                  <div className="flex shrink-0 items-center gap-1 text-sm font-bold text-foreground">
-                    <Star className="h-4 w-4 fill-primary text-primary" />
-                    {unit.rating}
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <h3 className="text-xl font-black text-slate-900 tracking-tight">
+                      {unit.name}
+                    </h3>
+                    <span className="text-xs text-slate-500 font-semibold mt-0.5 block">
+                      Kategori: {unit.category}
+                    </span>
                   </div>
                 </div>
 
-                {/* Specs */}
-                <ul className="mt-4 space-y-2">
+                {/* Specs list */}
+                <ul className="mt-4 space-y-2 border-t border-slate-100 pt-3">
                   {unit.specs.map((spec) => (
-                    <li
-                      key={spec}
-                      className="flex items-center gap-2 text-sm text-muted-foreground"
-                    >
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
-                      {spec}
+                    <li key={spec} className="flex items-center gap-2 text-xs text-slate-600 font-medium">
+                      <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-amber-500" />
+                      <span>{spec}</span>
                     </li>
                   ))}
                 </ul>
 
-                <div className="mt-6 flex-1" />
+                {/* Features (Include Operator SIO & BBM) */}
+                <div className="mt-3.5 flex flex-wrap gap-1.5">
+                  {unit.features.map((f) => (
+                    <span
+                      key={f}
+                      className="rounded-md bg-slate-100 px-2.5 py-0.5 text-[11px] font-semibold text-slate-700"
+                    >
+                      {f}
+                    </span>
+                  ))}
+                </div>
 
-                <Button className="mt-2 w-full gap-2 font-bold">
-                  Ajukan Sewa
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
+                <div className="flex-1 min-h-[1.5rem]" />
+
+                {/* Pricing & CTA */}
+                <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
+                  <div>
+                    <span className="text-[10px] uppercase font-bold text-slate-400 block">
+                      Estimasi Sewa / Shift
+                    </span>
+                    <span className="text-lg font-black text-slate-900 font-mono">
+                      Rp {unit.basePricePerShift.toLocaleString('id-ID')}
+                    </span>
+                  </div>
+
+                  <Button
+                    onClick={() => handleBookUnit(unit.id)}
+                    className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs gap-1.5 px-4 shadow-sm"
+                  >
+                    Ajukan Sewa
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Mobile CTA */}
-        <div className="mt-10 text-center sm:hidden">
-          <Button variant="outline" className="gap-2 font-semibold">
-            Lihat Semua Unit
-            <ArrowRight className="h-4 w-4" />
-          </Button>
         </div>
       </div>
     </section>

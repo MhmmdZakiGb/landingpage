@@ -4,29 +4,29 @@
 
 @layer base {
   :root {
-    /* Industrial amber/safety palette */
-    --background: 210 20% 98%;
-    --foreground: 215 28% 17%;
+    /* Warm industrial cream & amber palette (Figma) */
+    --background: 24 100% 98%;
+    --foreground: 28 31% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 28% 17%;
+    --card-foreground: 28 31% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 28% 17%;
+    --popover-foreground: 28 31% 10%;
 
-    /* Primary: Safety amber */
-    --primary: 35 95% 51%;
-    --primary-foreground: 215 28% 12%;
+    /* Primary: Industrial Amber (#f59e0b) */
+    --primary: 38 92% 50%;
+    --primary-foreground: 28 31% 10%;
 
-    /* Secondary: Slate */
-    --secondary: 215 25% 27%;
-    --secondary-foreground: 210 20% 98%;
+    /* Secondary: Warm Sand (#fbebdd) */
+    --secondary: 28 79% 93%;
+    --secondary-foreground: 28 31% 10%;
 
-    --muted: 215 16% 94%;
-    --muted-foreground: 215 14% 42%;
+    --muted: 28 60% 94%;
+    --muted-foreground: 28 23% 26%;
 
-    /* Accent: Deep orange */
-    --accent: 22 88% 55%;
+    /* Accent: Deep Amber (#d97706) */
+    --accent: 32 95% 44%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
